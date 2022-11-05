@@ -1,0 +1,23 @@
+﻿@model Cliente
+@{
+    ViewData["Title"] = "Cadastrar";
+}
+
+<h1>Nova Ride! </h1>
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["msg"]
+    </div>
+}
+<form asp-action="cadastrar">
+
+    <partial name="_Form"/>
+
+     <input type="submit" value="Chamar Ride" class="btn btn-primary"/>
+    <button class="btn btn-outline-success" asp-area="" asp-controller="Cliente" asp-action="Index">
+        Rides cadastradas
+    </button>
+</form>
+

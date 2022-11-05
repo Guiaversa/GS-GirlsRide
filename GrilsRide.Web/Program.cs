@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 
 var sql = builder.Configuration.GetConnectionString("conexao");
 
-builder.Services.AddDbContext<GrilsRideContext>(op => op.UseSqlServer(sql));
+builder.Services.AddDbContext<GirlsRideContext>(o => o.UseSqlServer(sql));
 
 var app = builder.Build();
 
