@@ -7,7 +7,7 @@ namespace GrilsRide.Web.Percistencia
     {
         public DbSet<Carro> Carros { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
-
+        public DbSet<Cartao> Cartoes  { get; set; }
         public DbSet<Pagamento> pagamentos { get; set; }
        
         public GirlsRideContext(DbContextOptions op):base(op)

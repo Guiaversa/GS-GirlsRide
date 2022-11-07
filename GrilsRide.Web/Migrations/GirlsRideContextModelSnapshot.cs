@@ -52,6 +52,38 @@ namespace GirlsRide.Web.Migrations
                     b.ToTable("Carros");
                 });
 
+            modelBuilder.Entity("GrilsRide.Web.Models.Cartao", b =>
+                {
+                    b.Property<int>("CartaoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartaoId"), 1L, 1);
+
+                    b.Property<int?>("CartaoId1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("cvv")
+                        .HasColumnType("int");
+
+                    b.Property<string>("nomeImpresso")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nrCartao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("validade")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CartaoId");
+
+                    b.HasIndex("CartaoId1");
+
+                    b.ToTable("Cartoes");
+                });
+
             modelBuilder.Entity("GrilsRide.Web.Models.Cliente", b =>
                 {
                     b.Property<int>("Id")
@@ -61,6 +93,9 @@ namespace GirlsRide.Web.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CarroId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CartaoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -89,6 +124,8 @@ namespace GirlsRide.Web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CarroId");
+
+                    b.HasIndex("CartaoId");
 
                     b.HasIndex("PagamentosId");
 
@@ -122,11 +159,24 @@ namespace GirlsRide.Web.Migrations
                         .HasForeignKey("CarroId1");
                 });
 
+            modelBuilder.Entity("GrilsRide.Web.Models.Cartao", b =>
+                {
+                    b.HasOne("GrilsRide.Web.Models.Cartao", null)
+                        .WithMany("Cartoes")
+                        .HasForeignKey("CartaoId1");
+                });
+
             modelBuilder.Entity("GrilsRide.Web.Models.Cliente", b =>
                 {
                     b.HasOne("GrilsRide.Web.Models.Carro", "Carros")
                         .WithMany()
                         .HasForeignKey("CarroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GrilsRide.Web.Models.Cartao", "Cartoes")
+                        .WithMany()
+                        .HasForeignKey("CartaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -138,12 +188,19 @@ namespace GirlsRide.Web.Migrations
 
                     b.Navigation("Carros");
 
+                    b.Navigation("Cartoes");
+
                     b.Navigation("Pagamentos");
                 });
 
             modelBuilder.Entity("GrilsRide.Web.Models.Carro", b =>
                 {
                     b.Navigation("Carros");
+                });
+
+            modelBuilder.Entity("GrilsRide.Web.Models.Cartao", b =>
+                {
+                    b.Navigation("Cartoes");
                 });
 #pragma warning restore 612, 618
         }

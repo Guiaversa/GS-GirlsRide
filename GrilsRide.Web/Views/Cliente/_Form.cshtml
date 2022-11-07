@@ -42,6 +42,13 @@
      <input asp-for="Pagamentos.Total" class="form-control" value="19,99"/>
 </div>
 
+ <div class="mb-3">
+     <label asp-for="Cartoes"></label>
+     <select class="form-select" asp-for="CartaoId" asp-items="@ViewBag.cartoesList" >
+           <option>Selecione</option>
+     </select>
+ </div>
+
 
 
 

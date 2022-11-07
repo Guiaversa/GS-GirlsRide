@@ -23,6 +23,9 @@ namespace GrilsRide.Web.Models
         public Carro Carros { get; set; }
         public int CarroId { get; set; }
 
+        public Cartao Cartoes { get; set; }
+        public int CartaoId { get; set; }
+
         //Relacionamento 1:1
         public Pagamento Pagamentos {get; set; }
         public int PagamentosId { get; set; }

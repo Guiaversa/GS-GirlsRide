@@ -66,6 +66,8 @@ namespace GrilsRide.Web.Controllers
             return View();
 
         }
+
+
         public IActionResult Index(string placa)
         {
             var lista = _context.Carros.Where(c => c.Placa.Contains(placa) || placa == null).ToList();
@@ -79,5 +81,8 @@ namespace GrilsRide.Web.Controllers
 
             return View(lista);
         }
+
     }
+
+
 }

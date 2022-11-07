@@ -14,7 +14,7 @@ namespace GrilsRide.Web.Controllers
         {
             _context = context;
         }
-
+        Cartao cartao;
         [HttpPost]
         public IActionResult Remover(int id)
         {
@@ -52,21 +52,31 @@ namespace GrilsRide.Web.Controllers
         [HttpPost]
         public IActionResult Cadastrar(Cliente cliente)
         {
-            _context.Clientes.Add(cliente);
-            _context.SaveChanges();
-
-           
 
             if (cliente.Pagamentos.metodoPagamento == "Cartão")
             {
-                return RedirectToAction("CadastrarCartao");
+                if (cliente.CartaoId != 0)
+                {
+                    _context.Clientes.Add(cliente);
+                    _context.SaveChanges();
+
+                    TempData["msg"] = "Ride iniciada com sucesso!";
+                    return RedirectToAction("Index2");
+                }
+                else
+                {
+                    TempData["msge"] = "Você precisa selecionar um Cartão";
+                     return RedirectToAction("CadastrarCartao");
+                }
             }
             else
             {
+                cartao.CartaoId = 1;
+                _context.Clientes.Add(cliente);
+                _context.SaveChanges();
                 TempData["msg"] = "Ride iniciada com sucesso!";
-                return RedirectToAction("Cadastrar");
+                return RedirectToAction("Index2");
             }
-
             
         }
 
@@ -76,6 +86,28 @@ namespace GrilsRide.Web.Controllers
             var lista = _context.Carros.ToList();
             ViewBag.carrosList = new SelectList(lista, "CarroId", "ModeloCarro");
 
+            var listaCartao = _context.Cartoes.ToList();
+            ViewBag.cartoesList = new SelectList(listaCartao, "CartaoId", "nrCartao");
+
+            return View();
+
+        }
+
+        [HttpPost]
+        public IActionResult CadastrarCartao(Cartao cartao)
+        {
+            _context.Cartoes.Add(cartao);
+            _context.SaveChanges();
+
+            TempData["msgCartao"] = "Cartão cadastrado com sucesso!";
+
+            return RedirectToAction("Cadastrar");
+        }
+
+        [HttpGet]
+        public IActionResult CadastrarCartao()
+        {
+            
             return View();
 
         }
@@ -93,6 +125,26 @@ namespace GrilsRide.Web.Controllers
                 .ToList();
 
             return View(lista);
+        }
+
+        public IActionResult IndexCartoes()
+        {
+            var lista = _context.Clientes.Include(ca => ca.Cartoes).ToList();
+
+            return View(lista);
+        }
+
+
+        [HttpPost]
+        public IActionResult RemoverCt(int id)
+        {
+            var RemoverCartao = _context.Cartoes.Find(id);
+            _context.Cartoes.Remove(RemoverCartao);
+            _context.SaveChanges();
+
+            TempData["msgcr"] = "Cartão removido!";
+
+            return RedirectToAction("IndexCartoes");
         }
     }
 }
