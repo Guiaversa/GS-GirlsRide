@@ -1,4 +1,4 @@
-namespace GrilsRide.Web.Models
+namespace GirlsRide.Web.Models
 {
     public class ErrorViewModel
     {

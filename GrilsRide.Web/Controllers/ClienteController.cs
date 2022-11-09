@@ -1,10 +1,10 @@
-﻿using GrilsRide.Web.Models;
-using GrilsRide.Web.Percistencia;
+﻿using GirlsRide.Web.Models;
+using GirlsRide.Web.Percistencia;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace GrilsRide.Web.Controllers
+namespace GirlsRide.Web.Controllers
 {
     public class ClienteController : Controller
     {
@@ -15,6 +15,33 @@ namespace GrilsRide.Web.Controllers
             _context = context;
         }
         Cartao cartao;
+
+        [HttpGet]
+        public IActionResult Agendamento(int id)
+        {
+            var clienteAgendamento = _context.clienteAgendamentos
+                .Where(v=> v.ClienteId == id)
+                .Select(v => v.AgendamentoId)
+                .ToList();
+
+            ViewBag.clienteAgendamento = clienteAgendamento;
+
+            var lista = _context.Agendamentos.ToList();
+
+            ViewBag.agendamento = new SelectList(lista, "Id", "AgendamentoNo");
+
+            var cliente = _context.Clientes.Find(id);
+
+            return View(cliente);
+        }
+        [HttpPost]
+        public IActionResult Adicionar(ClienteAgendamento clienteAgendamento)
+        {
+            _context.clienteAgendamentos.Add(clienteAgendamento);
+            _context.SaveChanges();
+            TempData["msgagf"] = "Ride Agendada!";
+            return RedirectToAction("Agendamento", new {id = clienteAgendamento.ClienteId});
+        }
         [HttpPost]
         public IActionResult Remover(int id)
         {
@@ -43,7 +70,13 @@ namespace GrilsRide.Web.Controllers
 
         [HttpGet]
         public IActionResult Editar(int id)
+
         {
+            var lista = _context.Carros.ToList();
+            ViewBag.carrosList = new SelectList(lista, "Id", "ModeloCarro");
+
+            var listaCartao = _context.Cartoes.ToList();
+            ViewBag.cartoesList = new SelectList(listaCartao, "Id", "nrCartao");
             var cliente = _context.Clientes.Find(id);
 
             return View(cliente);
@@ -52,9 +85,7 @@ namespace GrilsRide.Web.Controllers
         [HttpPost]
         public IActionResult Cadastrar(Cliente cliente)
         {
-
-            if (cliente.Pagamentos.metodoPagamento == "Cartão")
-            {
+       
                 if (cliente.CartaoId != 0)
                 {
                     _context.Clientes.Add(cliente);
@@ -68,26 +99,17 @@ namespace GrilsRide.Web.Controllers
                     TempData["msge"] = "Você precisa selecionar um Cartão";
                      return RedirectToAction("CadastrarCartao");
                 }
-            }
-            else
-            {
-                cartao.CartaoId = 1;
-                _context.Clientes.Add(cliente);
-                _context.SaveChanges();
-                TempData["msg"] = "Ride iniciada com sucesso!";
-                return RedirectToAction("Index2");
-            }
-            
+               
         }
 
         [HttpGet]
         public IActionResult Cadastrar()
         {
             var lista = _context.Carros.ToList();
-            ViewBag.carrosList = new SelectList(lista, "CarroId", "ModeloCarro");
+            ViewBag.carrosList = new SelectList(lista, "Id", "ModeloCarro");
 
             var listaCartao = _context.Cartoes.ToList();
-            ViewBag.cartoesList = new SelectList(listaCartao, "CartaoId", "nrCartao");
+            ViewBag.cartoesList = new SelectList(listaCartao, "Id", "nrCartao");
 
             return View();
 

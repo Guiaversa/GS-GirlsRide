@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace GrilsRide.Web.Models
+namespace GirlsRide.Web.Models
 {
     public class Cliente
     {
@@ -30,10 +30,13 @@ namespace GrilsRide.Web.Models
         public Pagamento Pagamentos {get; set; }
         public int PagamentosId { get; set; }
 
-     
+        //relacionamento N:M
+        public IList<ClienteAgendamento> clienteAgendamentos { get; set; }
 
-     
-        
+
+
+
+
 
 
     }

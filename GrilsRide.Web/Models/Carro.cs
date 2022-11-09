@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
-namespace GrilsRide.Web.Models
+namespace GirlsRide.Web.Models
 {
     public class Carro
     {
         [HiddenInput]
-        public int CarroId { get; set; }
+        [Key]
+        public int Id { get; set; }
         public string ModeloCarro { get; set; }
         public string Placa { get; set; }
         public string SenhaPorta { get; set; }

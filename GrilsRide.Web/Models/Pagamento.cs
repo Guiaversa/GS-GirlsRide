@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GrilsRide.Web.Models
+namespace GirlsRide.Web.Models
 {
     public class Pagamento
     {
         [HiddenInput]
-        public int PagamentoId { get; set; }
+        [Key]
+        public int Id { get; set; }
+        [NotMapped]
         public string metodoPagamento { get; set; }
         public double Total { get; set; }
 

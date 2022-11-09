@@ -12,53 +12,58 @@
 }
 <h1>Rides Realizadas</h1>
 
-<table class="table table-hover">
-    <tr>
-        <th>Numero do cartão</th>
-        <th>Nome impresso</th>
-        <th>Data de validade</th>
-        <th>CVV</th>
-    </tr>
 
-    @foreach (var v in Model)
-    {
-    <tr>
-        <td>@v.Cartoes.nrCartao</td>
-        <td>@v.Cartoes.nomeImpresso</td>
-        <td>@v.Cartoes.validade</td>
-        <td>@v.Cartoes.cvv</td>
+    <table class="table table-hover">
+      <A class="btn btn-outline-primary" asp-controller="Cliente" asp-action="CadastrarCartao">
+                Cadastrar novo Cartão
+      </A>
+        <tr>
+            <th>Numero do cartão</th>
+            <th>Nome impresso</th>
+            <th>Data de validade</th>
+            <th>CVV</th>
+        </tr>
 
-         <td> 
+        @foreach (var v in Model)
+        {
+        <tr>
+            <td>@v.Cartoes.nrCartao</td>
+            <td>@v.Cartoes.nomeImpresso</td>
+            <td>@v.Cartoes.validade</td>
+            <td>@v.Cartoes.cvv</td>
+
+             <td> 
           
-            <button onclick="IdCliente.value = @v.Cartoes.CartaoId" type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                 Remover
-             </button>
+                <button onclick="IdCliente.value = @v.Cartoes.Id" type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                     Remover
+                 </button>
 
-        </td>
-    </tr>
-    }
+            </td>
+        </tr>
+        }
 
 
 
- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Cancelamento de coleta</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Deseja Realmente Remover este cartão?
-      </div>
-      <div class="modal-footer">
-        <form asp-action="RemoverCt">
-            <input type="hidden" name="id" id="IdCliente"/>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-            <button type="submit" class="btn btn-danger">Sim</button>
-        </form>
+     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Deseja Realmente remover o cartão</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Deseja Realmente Remover este cartão?
+          </div>
+          <div class="modal-footer">
+            <form asp-action="RemoverCt">
+                <input type="hidden" name="id" id="IdCliente"/>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                <button type="submit" class="btn btn-danger">Sim</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
-</table>
+    
+    </table>
+ 

@@ -1,5 +1,5 @@
-﻿using GrilsRide.Web.Models;
-using GrilsRide.Web.Percistencia;
+﻿using GirlsRide.Web.Models;
+using GirlsRide.Web.Percistencia;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GrilsRide.Web.Controllers
@@ -14,10 +14,10 @@ namespace GrilsRide.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Remover(int id)
+        public IActionResult RemoverCarro(int id)
         {
-            var RemoverCarro = _context.Carros.Find(id);
-            _context.Carros.Remove(RemoverCarro);
+            var Remover = _context.Carros.Find(id);
+            _context.Carros.Remove(Remover);
             _context.SaveChanges();
 
             TempData["msgc"] = "Carro removido!";

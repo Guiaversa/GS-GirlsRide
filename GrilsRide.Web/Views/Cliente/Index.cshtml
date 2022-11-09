@@ -22,7 +22,6 @@
         <th>Modelo do carro</th>
         <th>Placa</th>
         <th>Senha da porta</th>
-        <th>Metodo de pagamento</th>
         <th>Valor total</th>
         <th>
             <form class="row row-cols-lg-auto g-3 mb-3 align-items-center">
@@ -49,7 +48,6 @@
         <td>@v.Carros?.ModeloCarro</td>
         <td>@v.Carros?.Placa</td>
         <td>@v.Carros?.SenhaPorta</td>
-        <td>@v.Pagamentos.metodoPagamento</td>
         <td>@v.Pagamentos.Total</td>
         
         
@@ -59,7 +57,7 @@
             <button onclick="IdCliente.value = @v.Id" type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
                  Cancelar
              </button>
-
+             
         </td>
     </tr>
     }

@@ -1,6 +1,6 @@
 ﻿@model List<Carro>
 @{
-    ViewData["Title"] = "Rides";
+    ViewData["Title"] = "Lista de Carros";
 }
 
 @if (TempData["msgc"] != null)
@@ -31,17 +31,17 @@
         
     </tr>
 
-    @foreach (var v in Model)
+    @foreach (var c in Model)
     {
     <tr>
-        <td>@v.ModeloCarro</td>
-        <td>@v.Placa</td>
-        <td>@v.SenhaPorta</td>
-        <td> <a asp-action="Editar"  class="btn btn-outline-dark btn-sm" asp-route-id="@v.CarroId">Editar</a>
+        <td>@c.ModeloCarro</td>
+        <td>@c.Placa</td>
+        <td>@c.SenhaPorta</td>
+        <td> <a asp-action="Editar"  class="btn btn-outline-dark btn-sm" asp-route-id="@c.Id">Editar</a>
             
 
-            <button onclick="IdCliente.value = @v.CarroId type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                 Cancelar
+            <button onclick="idCarro.value = @c.Id type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                 Remover
              </button>
 
         </td>
@@ -58,15 +58,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Cancelamento de coleta</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Removendo Carro da Frota</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Deseja Realmente cancelar a corrida?
+        Deseja Realmente Remover o carro?
       </div>
       <div class="modal-footer">
-        <form asp-action="remover">
-            <input type="hidden" name="id" id="IdCliente"/>
+        <form  asp-action="RemoverCarro">
+            <input type="hidden" name="id" id="idCarro"/>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
             <button type="submit" class="btn btn-danger">Sim</button>
         </form>

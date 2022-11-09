@@ -1,8 +1,11 @@
-﻿namespace GrilsRide.Web.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GirlsRide.Web.Models
 {
     public class Cartao
     {
-        public int CartaoId { get; set; }
+        [Key]
+        public int Id { get; set; }
         public string nrCartao { get; set; }
         public DateTime validade { get; set; }
         public int cvv { get; set; }

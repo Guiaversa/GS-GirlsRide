@@ -1,4 +1,4 @@
-﻿using GrilsRide.Web.Models;
+﻿using GirlsRide.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

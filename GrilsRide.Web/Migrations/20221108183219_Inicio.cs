@@ -10,60 +10,86 @@ namespace GirlsRide.Web.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Agendamentos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AgendamentoNo = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Agendamentos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Avaliacoes",
+                columns: table => new
+                {
+                    AvaliacaoId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nota = table.Column<int>(type: "int", nullable: false),
+                    comentario = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Avaliacoes", x => x.AvaliacaoId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Carros",
                 columns: table => new
                 {
-                    CarroId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ModeloCarro = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Placa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SenhaPorta = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CarroId1 = table.Column<int>(type: "int", nullable: true)
+                    CarroId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Carros", x => x.CarroId);
+                    table.PrimaryKey("PK_Carros", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Carros_Carros_CarroId1",
-                        column: x => x.CarroId1,
+                        name: "FK_Carros_Carros_CarroId",
+                        column: x => x.CarroId,
                         principalTable: "Carros",
-                        principalColumn: "CarroId");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Cartoes",
                 columns: table => new
                 {
-                    CartaoId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nrCartao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     validade = table.Column<DateTime>(type: "datetime2", nullable: false),
                     cvv = table.Column<int>(type: "int", nullable: false),
                     nomeImpresso = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CartaoId1 = table.Column<int>(type: "int", nullable: true)
+                    CartaoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cartoes", x => x.CartaoId);
+                    table.PrimaryKey("PK_Cartoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cartoes_Cartoes_CartaoId1",
-                        column: x => x.CartaoId1,
+                        name: "FK_Cartoes_Cartoes_CartaoId",
+                        column: x => x.CartaoId,
                         principalTable: "Cartoes",
-                        principalColumn: "CartaoId");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "pagamentos",
                 columns: table => new
                 {
-                    PagamentoId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    metodoPagamento = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Total = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_pagamentos", x => x.PagamentoId);
+                    table.PrimaryKey("PK_pagamentos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,31 +114,60 @@ namespace GirlsRide.Web.Migrations
                         name: "FK_Clientes_Carros_CarroId",
                         column: x => x.CarroId,
                         principalTable: "Carros",
-                        principalColumn: "CarroId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Clientes_Cartoes_CartaoId",
                         column: x => x.CartaoId,
                         principalTable: "Cartoes",
-                        principalColumn: "CartaoId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Clientes_pagamentos_PagamentosId",
                         column: x => x.PagamentosId,
                         principalTable: "pagamentos",
-                        principalColumn: "PagamentoId",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "clienteAgendamentos",
+                columns: table => new
+                {
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    AgendamentoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_clienteAgendamentos", x => new { x.ClienteId, x.AgendamentoId });
+                    table.ForeignKey(
+                        name: "FK_clienteAgendamentos_Agendamentos_AgendamentoId",
+                        column: x => x.AgendamentoId,
+                        principalTable: "Agendamentos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_clienteAgendamentos_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Carros_CarroId1",
+                name: "IX_Carros_CarroId",
                 table: "Carros",
-                column: "CarroId1");
+                column: "CarroId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cartoes_CartaoId1",
+                name: "IX_Cartoes_CartaoId",
                 table: "Cartoes",
-                column: "CartaoId1");
+                column: "CartaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_clienteAgendamentos_AgendamentoId",
+                table: "clienteAgendamentos",
+                column: "AgendamentoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clientes_CarroId",
@@ -132,6 +187,15 @@ namespace GirlsRide.Web.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Avaliacoes");
+
+            migrationBuilder.DropTable(
+                name: "clienteAgendamentos");
+
+            migrationBuilder.DropTable(
+                name: "Agendamentos");
+
             migrationBuilder.DropTable(
                 name: "Clientes");
 
