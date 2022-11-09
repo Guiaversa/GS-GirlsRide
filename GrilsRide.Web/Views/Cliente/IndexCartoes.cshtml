@@ -1,22 +1,17 @@
-﻿@model List<Cliente>
+﻿@model List<Cartao>
 @{
     ViewData["Title"] = "Cartoes";
 }
 
 
-@if (TempData["msgcr"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["msgcr"]
-    </div>
-}
+
 <h1>Rides Realizadas</h1>
 
 
     <table class="table table-hover">
-      <A class="btn btn-outline-primary" asp-controller="Cliente" asp-action="CadastrarCartao">
+      <a class="btn btn-outline-primary" asp-controller="Cliente" asp-action="CadastrarCartao">
                 Cadastrar novo Cartão
-      </A>
+      </a>
         <tr>
             <th>Numero do cartão</th>
             <th>Nome impresso</th>
@@ -27,14 +22,14 @@
         @foreach (var v in Model)
         {
         <tr>
-            <td>@v.Cartoes.nrCartao</td>
-            <td>@v.Cartoes.nomeImpresso</td>
-            <td>@v.Cartoes.validade</td>
-            <td>@v.Cartoes.cvv</td>
+            <td>@v.nrCartao</td>
+            <td>@v.nomeImpresso</td>
+            <td>@v.validade</td>
+            <td>@v.cvv</td>
 
              <td> 
           
-                <button onclick="IdCliente.value = @v.Cartoes.Id" type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button onclick="IdCliente.value = @v.Id" type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
                      Remover
                  </button>
 

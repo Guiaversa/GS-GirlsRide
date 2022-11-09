@@ -25,7 +25,7 @@ namespace GirlsRide.Web.Controllers
             _context.Agendamentos.Add(agendamento);
             _context.SaveChanges();
 
-            TempData["msgag"] = "Agendamento Realizado!";
+            TempData["msgag"] = "Agendamento Cadastrado!";
             return RedirectToAction("Index");
         }
     }

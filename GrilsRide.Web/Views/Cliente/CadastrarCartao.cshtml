@@ -13,6 +13,12 @@
         @TempData["msge"]
     </div>
 }
+@if (TempData["msgCartao"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["msgCartao"]
+    </div>
+}
 <form asp-action="CadastrarCartao">
 
     <div class="mb-3">

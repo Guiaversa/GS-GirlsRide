@@ -14,14 +14,13 @@ namespace GirlsRide.Web.Controllers
         {
             _context = context;
         }
-        Cartao cartao;
 
         [HttpGet]
         public IActionResult Agendamento(int id)
         {
             var clienteAgendamento = _context.clienteAgendamentos
                 .Where(v=> v.ClienteId == id)
-                .Select(v => v.AgendamentoId)
+                .Select(v => v.Agendamento)
                 .ToList();
 
             ViewBag.clienteAgendamento = clienteAgendamento;
@@ -123,13 +122,13 @@ namespace GirlsRide.Web.Controllers
 
             TempData["msgCartao"] = "Cartão cadastrado com sucesso!";
 
-            return RedirectToAction("Cadastrar");
+            return RedirectToAction("CadastrarCartao");
         }
 
         [HttpGet]
         public IActionResult CadastrarCartao()
         {
-            
+            var cartao = _context.Cartoes.ToList();
             return View();
 
         }
@@ -151,7 +150,7 @@ namespace GirlsRide.Web.Controllers
 
         public IActionResult IndexCartoes()
         {
-            var lista = _context.Clientes.Include(ca => ca.Cartoes).ToList();
+            var lista = _context.Cartoes.ToList();
 
             return View(lista);
         }
