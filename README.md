@@ -1,5 +1,8 @@
 GS-GirlsRide
 
+Aplicativo Rodando em PRD : https://girlsrideweb.azurewebsites.net/
+
+
 Murilo Sousa de Carvalho rm88650
 
 Guilherme Aversa Ferreira Rm80369
